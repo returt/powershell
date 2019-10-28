@@ -1,37 +1,34 @@
-# ñêðèïò îïðåäåëÿåò, êàêîé þçåð çàëîãèíèëñÿ íà êîìïüþòåðå
+# ÑÐºÑ€Ð¸Ð¿Ñ‚ Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»ÑÐµÑ‚, ÐºÐ°ÐºÐ¾Ð¹ ÑŽÐ·ÐµÑ€ Ð·Ð°Ð»Ð¾Ð³Ð¸Ð½Ð¸Ð»ÑÑ Ð½Ð° ÐºÐ¾Ð¼Ð¿ÑŒÑŽÑ‚ÐµÑ€Ðµ
 import-module activedirectory
-# Îáúÿâëÿåì ïåðåìåííûå
-# îáëàñòü ïîèñêà
+# Ð¾Ð±Ð»Ð°ÑÑ‚ÑŒ Ð¿Ð¾Ð¸ÑÐºÐ°
 $OU="OU=,OU=,OU=,DC=,DC="
-# Óêàçûâàåì Äîìåí
+# ÑƒÐºÐ°Ð·Ñ‹Ð²Ð°ÐµÐ¼ Ð”Ð¾Ð¼ÐµÐ½
 $domain=''
-# Óêàçûâàåì ïóòü ê îò÷åòó
-$reportpatch="ñ:\temp\audit.csv"
+# ÑƒÐºÐ°Ð·Ñ‹Ð²Ð°ÐµÐ¼ Ð¿ÑƒÑ‚ÑŒ Ðº Ð¾Ñ‚Ñ‡ÐµÑ‚Ñƒ
+$reportpatch="c:\temp\audit.csv"
 if (Test-Path -Path $reportPatch) {Remove-Item $reportPatch}
-# Îòáèðàåì ÏÊ ïî ôèëüòðó
+# Ð¾Ñ‚Ð±Ð¸Ñ€Ð°ÐµÐ¼ ÐŸÐš Ð¿Ð¾ Ñ„Ð¸Ð»ÑŒÑ‚Ñ€Ñƒ
 Get-ADComputer -Filter * -SearchBase $OU  |
 ForEach-Object {
-#Ïåðåâîäèì â ïåðåìåííóþ òîëüêî èìÿ ÏÊ
+# Ð¿ÐµÑ€ÐµÐ²Ð¾Ð´Ð¸Ð¼ Ð² Ð¿ÐµÑ€ÐµÐ¼ÐµÐ½Ð½ÑƒÑŽ Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ð¸Ð¼Ñ ÐŸÐš
 $computer=($_).Name
-echo "computer = $computer"
 if ((Test-Connection -computer $computer -count 2 -quiet) -eq $True)
 {
-# Óçíàåì êàêîé ïîëüçîâàòåëü ðàáîòàåò íà äàííîì ÏÊ è óäàëÿåì ïðèñòàâêó ñ íàçâàíèåì äîìåíà. 
+# Ð£Ð·Ð½Ð°ÐµÐ¼ ÐºÑ‚Ð¾ Ñ€Ð°Ð±Ð¾Ñ‚Ð°ÐµÑ‚ Ð½Ð° Ð´Ð°Ð½Ð½Ð¾Ð¼ ÐŸÐš Ð¸ ÑƒÐ´Ð°Ð»ÑÐµÐ¼ Ð¿Ñ€Ð¸ÑÑ‚Ð°Ð²ÐºÑƒ Ñ Ð½Ð°Ð·Ð²Ð°Ð½Ð¸ÐµÐ¼ Ð´Ð¾Ð¼ÐµÐ½Ð°
 $sam=(get-wmiobject win32_computerSystem -computerName $computer).username.split("\")[1]
-echo "user = $sam"
 if ($sam -ne $null)
 {
-# Íàõîäèì ïîëüçîâàòåëÿ â ActiveDirectory ïî samaccountname è ïåðåâîäèì â âûâîä Èìÿ Ôàìèëèÿ
+# ÐÐ°Ñ…Ð¾Ð´Ð¸Ð¼ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»Ñ Ð² AD Ð¿Ð¾ samaccountname Ð¸ Ð¿ÐµÑ€ÐµÐ²Ð¾Ð´Ð¸Ð¼ Ð² Ð²Ñ‹Ð²Ð¾Ð´ Ð˜Ð¼Ñ Ð¤Ð°Ð¼Ð¸Ð»Ð¸Ñ
 $dn=(Get-ADUser -identity $sam).Name
 if ($dn -ne $null)
 {
-# Âûâîäèì ïîëó÷åííûé ðåçóëüòàò - ÏÊ - Èìÿ Ôàìèëèÿ
-echo "$computer - $dn" >> $reportPatch
+# Ð²Ñ‹Ð²Ð¾Ð´Ð¸Ð¼ Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ð½Ñ‹Ð¹ Ñ€ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚ - ÐŸÐš - Ð˜Ð¼Ñ Ð¤Ð°Ð¼Ð¸Ð»Ð¸Ñ
+echo "$computer - $dn" >> $reportpatch
 }
 }
 else 
 {
-# çàïèñûâàåì "ïðîáëåìíûå" êîìïû
+# Ð·Ð°Ð¿Ð¸ÑÑ‹Ð²Ð°ÐµÐ¼ "Ð¿Ñ€Ð¾Ð±Ð»ÐµÐ¼Ð½Ñ‹Ðµ" ÐºÐ¾Ð¼Ð¿Ñ‹
 echo $computer >> c:\temp\bad_comp.txt
 }
 }
