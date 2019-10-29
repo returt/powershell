@@ -3,8 +3,7 @@
 
 compname = ""
 Do
-  compname = InputBox("Enter computername", _
-    "user_by_comp_new.vbs",compname)
+  compname = InputBox("Enter computername", "Searching users which can register on a computer",compname)
   If compname = "" Then Exit Do
 
   Set objConnection = CreateObject("ADODB.Connection")
@@ -13,7 +12,7 @@ Do
   objCommand.ActiveConnection = objConnection
 
   objCommand.CommandText = _
-    "<LDAP://dc=severnoe,dc=ru>;" & _
+          "<LDAP://dc=domain,dc=ru>;" & _
       "(&(objectCategory=user)(userWorkstations=*));" & _
         "userWorkstations,sAMAccountName,cn,telephoneNumber,adspath,description;subtree"
   Set objRecordSet = objCommand.Execute
