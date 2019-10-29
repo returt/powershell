@@ -1,7 +1,7 @@
-# Script removes user from domain group
-# The list of users and the name of the security AD-group are taken from the command line
-# Display Names listed in text file (incomplete possible)
-# Use: remove_user_from_group.ps1 exclude.txt some_security_ad-group
+# script removes user from domain group
+# the list of users and the name of the security AD-group are taken from the command line
+# display Names listed in text file (incomplete possible)
+# use: remove_user_from_group.ps1 exclude.txt some_security_ad-group
 
 if ($args[0] -ne $null -and $args[1] -ne $null)
 {
