@@ -20,7 +20,7 @@ $vm = @()
 if ( (test-path vm.txt) -or (test-path vhost.txt) ) { write-host "Erasing old files"; remove-item vm.txt -ea 0; remove-item vhosts.txt -ea 0 }
 foreach ($i in $servers) { if ( (get-windowsfeature -name Hyper-V -computername $i.dnshostname -ea 0).installed ) {$vhost += $i} }
 $vhost.dnshostname >>.\vhost.txt
-foreach ($i in $vhost) { $vm += Get-VM –ComputerName $i.dnshostname | Where-Object { $_.State –eq 'Running' } -ea 0 }
+foreach ($i in $vhost) { $vm += Get-VM â€“ComputerName $i.dnshostname | Where-Object { $_.State â€“eq 'Running' } -ea 0 }
 foreach ($element in $vm) { if ($element.name -ne 'server-hpdp80') { $element.name >>.\vm.txt } }
 write-host "Get hosts and vms are done."
 write-host "Stopping VM"
