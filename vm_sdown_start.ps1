@@ -1,10 +1,10 @@
-# script collects from AD server with Hyper-V role installed
+# script collects from AD servers with Hyper-V role installed
 # and creates two files in its execution directory for future use:
 # vhost.txt - file with list of all hosts with virtual machines
 # vm.txt - file is listing all running machines (excluding server-hpdp80)
 #
 # use vm_stop_start.ps1 with following parameters to shutdown/start:
-# vm_stop_start.ps1 stop - a shutdown of launched virt machines;
+# vm_stop_start.ps1 stop - shutdown of launched virt machines;
 # vm_stop_start.ps1 start - starts the machine that is turned off.
 
 import-module servermanager; import-module activedirectory
@@ -27,7 +27,7 @@ write-host "Stopping VM"
 get-content .\vhost.txt | Tee-Object -Variable vhost
 get-content .\vm.txt | Tee-Object -Variable vm
 foreach ($i in $vhost) {
-foreach ($j in $vm) { stop-vm -name $j -computername $i -turnoff -whatif -ea 0 }
+foreach ($j in $vm) { stop-vm -name $j -computername $i -turnoff -ea 0 }
 }
 write-host -foregroundcolor red "All VM are stopped."
 }
@@ -42,7 +42,6 @@ write-host "Starting VM"
 get-content .\vhost.txt | Tee-Object -Variable vhost
 get-content .\vm.txt | Tee-Object -Variable vm
 foreach ($i in $vhost) {
-#foreach ($j in $vm) { start-vm -name $j -computername $i -whatif -ea 0 }
 foreach ($j in $vm) { start-vm -name $j -computername $i -ea 0 }
 }
 write-host -foregroundcolor green "All VM are started."
