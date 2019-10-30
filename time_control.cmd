@@ -1,5 +1,5 @@
 rem Windows Time Service configuration validation logon-script
-rem If errors occur, sends an e-mail message (postie.exe) to the user@domain.ru and tries to correct them
+rem If errors occur, sends an e-mail message (postie.exe) to the admin@domain.ru and tries to correct them
 @echo off
 ping -n 20 127.0.0.1
 chcp 866 >nul
