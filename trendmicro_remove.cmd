@@ -1,7 +1,7 @@
 rem script replace administrative password for trendmicro virusscan
 rem for further removal of this product
 
-setlocal enabledelayedexpansion
+setlocal Enabledelayedexpansion
 sc qc TMBMServer >tm_os.tmp
 for /f tokens^=2^ delims^=^" %%i in ('findstr -i binary tm_os.tmp') do (
 set tmpath=%%i
