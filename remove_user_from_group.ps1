@@ -10,7 +10,7 @@ $dn=get-content $args[0] -readcount 1
 if ($dn -ne $null) {
 foreach ($a in $dn) {
 $b=$a+"*"
-$c=get-aduser -SearchBase "dc=zoloto585,dc=int" -ldapfilter "(&(objectCategory=person)(objectClass=user)(!userAccountControl:1.2.840.113556.1.4.803:=2)(displayname=$b))" | select samaccountname
+$c=get-aduser -SearchBase "dc=domain,dc=ru" -ldapfilter "(&(objectCategory=person)(objectClass=user)(!userAccountControl:1.2.840.113556.1.4.803:=2)(displayname=$b))" | select samaccountname
 remove-adgroupmember -identity $args[1] -members $c #-confirm:$false
 }
 }
