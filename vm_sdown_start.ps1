@@ -4,7 +4,7 @@
 # vm.txt - file is listing all running machines (excluding server-hpdp80)
 #
 # use vm_stop_start.ps1 with following parameters to shutdown/start:
-# vm_stop_start.ps1 stop - shutdown of launched virt machines;
+# vm_stop_start.ps1 stop - shutdown of running virt machines;
 # vm_stop_start.ps1 start - starts the machine that is turned off.
 
 import-module servermanager; import-module activedirectory
